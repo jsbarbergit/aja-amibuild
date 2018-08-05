@@ -21,19 +21,19 @@
   "provisioners": [
     {
       "type": "file",
-      "target": "/etc/pure-ftpd/pure-ftpd.conf",
+      "destination": "/tmp/pure-ftpd.conf",
       "source": "./pure-ftpd.conf"
     },
     {
       "type": "file",
-      "target": "/var/lib/cloud/scripts/per-instance/run_per_launch.sh",
+      "destination": "/tmp/run_per_launch.sh",
       "source": "./run_per_launch.sh"
     },
     {
       "type": "shell",
       "inline": [
+        "sudo mv /tmp/run_per_launch.sh /var/lib/cloud/scripts/per-instance/run_per_launch.sh",
         "sudo chmod +x /var/lib/cloud/scripts/per-instance/run_per_launch.sh"
-        "sudo chmod +x /etc/rc.local"
       ]
     }
   ]
