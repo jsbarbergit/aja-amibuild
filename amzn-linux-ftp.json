@@ -1,0 +1,40 @@
+{
+    "builders": [
+      {
+        "type": "amazon-ebs",
+        "region": "eu-west-1",
+        "instance_type": "t2.micro",
+        "ssh_username": "ec2-user",
+        "ami_name": "AJA FTP {{timestamp}}",
+        "source_ami": "ami-466768ac",
+        "tags": {
+          "OS_Version": "AmazonLinux2",
+          "Release": "Latest"
+        },
+        "ami_description": "Simple PureFTPD Server",
+        "ami_virtualization_type": "hvm",
+        "associate_public_ip_address": "true",
+        "ssh_interface": "public_ip",
+        "user_data_file": "./userdata.sh"
+      }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "target": "/etc/pure-ftpd/pure-ftpd.conf",
+      "source": "./pure-ftpd.conf"
+    },
+    {
+      "type": "file",
+      "target": "/var/lib/cloud/scripts/per-instance/run_per_launch.sh",
+      "source": "./run_per_launch.sh"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo chmod +x /var/lib/cloud/scripts/per-instance/run_per_launch.sh"
+        "sudo chmod +x /etc/rc.local"
+      ]
+    }
+  ]
+}
