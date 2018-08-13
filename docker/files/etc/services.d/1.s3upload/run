@@ -1,0 +1,2 @@
+#!/usr/bin/with-contenv sh
+pure-uploadscript -B -r /opt/uploadscript.sh
